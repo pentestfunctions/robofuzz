@@ -5,7 +5,7 @@ Path fuzzer made in rust (In Development)
   <img src="https://github.com/pentestfunctions/robofuzz/blob/main/images/usage.gif">
 </p>
 
-[Grab the release](https://github.com/pentestfunctions/robofuzz/releases)
+[Grab the test release for windws/arch/kali](https://github.com/pentestfunctions/robofuzz/releases)
 
 Then simply 
 ```bash
