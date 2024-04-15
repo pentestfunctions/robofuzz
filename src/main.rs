@@ -203,7 +203,8 @@ async fn main() {
                     pathfuzz::path_fuzz(&url, &combined_wordlist_arc, wordlist2, &headers, &progress_bar, &processed_requests, &filtered_requests, &invalid_signatures, threads).await;
                 },
                 Err(e) => {
-                    eprintln!("Error fetching robots.txt & sitemap.xml: {}", e);
+                    eprintln!("Error fetching robots.txt & sitemap.xml: {}\n", e);
+                    pathfuzz::path_fuzz(&url, &wordlist, None, &headers, &progress_bar, &processed_requests, &filtered_requests, &invalid_signatures, threads).await;
                 }
             }
         } else {
