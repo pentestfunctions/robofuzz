@@ -13,6 +13,7 @@ use colorful::Colorful;
 
 lazy_static::lazy_static! {
     static ref HTTP_CLIENT: Client = Client::builder()
+        .danger_accept_invalid_certs(true) // Accept invalid (e.g., self-signed) certificates
         .pool_idle_timeout(Some(Duration::from_secs(10)))
         .build()
         .expect("Failed to create HTTP client");
