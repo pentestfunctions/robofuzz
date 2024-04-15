@@ -1,6 +1,9 @@
-# robofuzz
+# 🤖 robofuzz 🤖
 Path fuzzer made in rust (In Development)
 
+<p align="center">
+  <img src="https://github.com/pentestfunctions/robofuzz/blob/main/images/usage.gif">
+</p>
 
 [Grab the release](https://github.com/pentestfunctions/robofuzz/releases)
 
@@ -58,4 +61,25 @@ OPTIONS:
 
     4. VHost/Subdomain scanning against a specific IP address
         --url "https://FUZZ.example.li/" -w subdomains.txt -i 192.168.1.1
+```
+
+Notes:
+It will try get words from robots.txt and paths from sitemap.xml
+It checks signatures for files that wont exist automatically (as well as subdomains) to ensure results are accurate. 
+
+Ideas for future changes:
+```
+--crawl function (for urls on the page)
+
+JS endpoints
+paramfinder (addin)
+burpsuite save request loadin
+
+Custom comment extraction?
+
+Compare lowercase results for things like DOWNLOAD and download based on signature to stop useless duplicates.
+
+Analyze URL style that is being fuzzed.
+If URL is FUZZ in the first part of the domain, we should use a subdomain list.
+If URL is FUZZ in the second part of the URL, we should use a directory wordlist
 ```
