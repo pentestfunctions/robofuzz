@@ -1,11 +1,14 @@
 use reqwest;
 use regex::Regex;
 use std::collections::HashMap;
-use url::{Url, Position};
 use std::collections::HashSet;
+use url::{Url, Position};
 
 pub async fn fetch_robots_and_sitemap(url: &str) -> Result<Vec<String>, reqwest::Error> {
-    let client = reqwest::Client::new();
+    let client = reqwest::Client::builder()
+        .danger_accept_invalid_certs(true)  // Accept invalid certificates
+        .build()?;  // Build the custom client
+
     let robots_url = url.replace("FUZZ", "robots.txt");
     let sitemap_url = url.replace("FUZZ", "sitemap.xml");
 
@@ -13,8 +16,6 @@ pub async fn fetch_robots_and_sitemap(url: &str) -> Result<Vec<String>, reqwest:
     let robots_response = client.get(&robots_url).send().await?;
     if robots_response.status().is_success() {
         let robots_contents = robots_response.text().await?;
-        // println!("Contents of {}: {}", robots_url, robots_contents);
-        let _robot_urls = extract_paths(&robots_contents);
         let robot_wordlist = create_wordlist(&robots_contents);
         println!("\nRobot Wordlist: {:?}\n", robot_wordlist);
     } else {
@@ -26,8 +27,6 @@ pub async fn fetch_robots_and_sitemap(url: &str) -> Result<Vec<String>, reqwest:
     if sitemap_response.status().is_success() {
         let sitemap_contents = sitemap_response.text().await?;
         let sitemap_urls = extract_paths(&sitemap_contents);
-        // println!("Contents of {}: {}", sitemap_url, sitemap_contents);
-        // println!("Sitemap URLs: {:?}", sitemap_urls);
         return Ok(sitemap_urls);
     } else {
         eprintln!("Failed to fetch sitemap.xml: Status {}", sitemap_response.status());
